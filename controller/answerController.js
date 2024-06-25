@@ -78,19 +78,3 @@ async function getDetailAnswers(req, res) {
 module.exports = { postAnswer, getAllAnswers, getDetailAnswers };
 
 
-
-
-
-// const answerQuestion = async (req, res) => {
-//   const { id } = req.params;
-//   const { username, text } = req.body;
-
-//   try {
-//     const question = await Question.findById(id);
-//     question.answers.push({ username, text });
-//     await question.save();
-//     res.status(201).json(question);
-//   } catch (error) {
-//     res.status(500).json({ message: "Something went wrong" });
-//   }
-// };

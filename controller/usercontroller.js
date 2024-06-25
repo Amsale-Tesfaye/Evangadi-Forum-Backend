@@ -38,7 +38,7 @@ async function register(req, res) {
  
   } catch (error) {
     console.log(error.message)
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "something went wrong, try again later!" })
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Register something went wrong, try again later!" })
   }}
 
          // login //
@@ -52,12 +52,12 @@ async function login(req, res) {
     const [user] = await dbConnection.query("select username,userid,password from users where email = ? ", [email])
 
     if (user.length == 0) {
-      return res.status(StatusCodes.BAD_REQUEST).json({msg: "invalid credential"});
+      return res.status(StatusCodes.BAD_REQUEST).json({msg: "User not found"});
     }
     //compare password
     const isMatch = await bcrypt.compare(password, user[0].password);
     if(!isMatch){
-       return res.status(StatusCodes.BAD_REQUEST).json({msg: "invalid credential"});
+       return res.status(StatusCodes.BAD_REQUEST).json({msg: "Password is not correct"});
     }
     
     const username = user[0].username
@@ -67,8 +67,8 @@ async function login(req, res) {
     return res.status(StatusCodes.OK).json({msg: "user login successful", token, username })
 
   } catch (error) {
-    console.log(error.message)
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "something went wrong, try again later!" })
+    console.log("login",error)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "login something went wrong, try again later!" })
   }
 }
 
